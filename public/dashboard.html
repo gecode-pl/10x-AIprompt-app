@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+      <head id="include-head">
+        <!-- Tutaj dynamicznie wstrzykiwany będzie head.html -->
+      </head>
+<body class="bg-light" style="min-height: 100vh; display: flex; flex-direction: column;">
+
+  <div id="include-navbar"></div>
+
+  <main class="flex-grow-1 container py-4">
+    <h1 class="mb-4">Twoje Prompty</h1>
+
+    <!-- FORMULARZ DODAWANIA -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <form id="addPromptForm">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="category" class="form-label">Kategoria</label>
+              <input type="text" class="form-control" id="category" required>
+            </div>
+            <div class="col-md-4">
+              <label for="name" class="form-label">Nazwa</label>
+              <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="col-md-4">
+              <label for="content" class="form-label">Treść</label>
+              <input type="text" class="form-control" id="content" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Dodaj prompt</button>
+        </form>
+        <div id="addPromptMessage" class="mt-3"></div>
+      </div>
+    </div>
+
+    <!-- TABELA PROMPTÓW -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Kategoria</th>
+            <th>Nazwa</th>
+            <th>Treść</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody id="promptTableBody">
+          <!-- Wiersze będą generowane dynamicznie -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="dashboardMessage" class="mt-4"></div>
+  </main>
+
+  <!-- MODAL: Edycja -->
+  <div class="modal fade" id="editPromptModal" tabindex="-1" aria-labelledby="editPromptModalLabel" inert>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPromptModalLabel">Edytuj Prompt</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editPromptId">
+          <div class="mb-3">
+            <label for="editCategory" class="form-label">Kategoria</label>
+            <input type="text" class="form-control" id="editCategory">
+          </div>
+          <div class="mb-3">
+            <label for="editName" class="form-label">Nazwa</label>
+            <input type="text" class="form-control" id="editName">
+          </div>
+          <div class="mb-3">
+            <label for="editContent" class="form-label">Treść</label>
+            <input type="text" class="form-control" id="editContent">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-primary" id="saveEditPrompt">Zapisz zmiany</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Usuwanie -->
+  <div class="modal fade" id="deletePromptModal" tabindex="-1" aria-labelledby="deletePromptModalLabel" inert>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deletePromptModalLabel">Potwierdź usunięcie</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+        </div>
+        <div class="modal-body">
+          Czy na pewno chcesz usunąć ten prompt?
+          <input type="hidden" id="deletePromptId">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-danger" id="confirmDeletePrompt">Usuń</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="include-footer"></div>
+
+  <!-- Bootstrap JS (konieczny do modali!) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Twój kod -->
+  <script src="dashboard.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
