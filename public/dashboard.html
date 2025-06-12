@@ -11,6 +11,36 @@
   <main class="flex-grow-1 container py-4">
     <h1 class="mb-4">Twoje Prompty</h1>
 
+    <!-- API INFO -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Informacje o API</h5>
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="toggleApiInfo()">
+          <i class="bi bi-eye"></i> Pokaż/Ukryj
+        </button>
+      </div>
+      <div class="card-body" id="apiInfoBody" style="display: none;">
+        <div class="mb-3">
+          <label class="form-label">Twoje ID użytkownika:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="userIdDisplay" readonly>
+            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('userIdDisplay')">
+              <i class="bi bi-clipboard"></i> Kopiuj
+            </button>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">URL do API:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="apiUrlDisplay" readonly>
+            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('apiUrlDisplay')">
+              <i class="bi bi-clipboard"></i> Kopiuj
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- FORMULARZ DODAWANIA -->
     <div class="card mb-4">
       <div class="card-body">
@@ -111,6 +141,9 @@
   <!-- Bootstrap JS (konieczny do modali!) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- Konfiguracja -->
+  <script src="config.js"></script>
+  
   <!-- Twój kod -->
   <script src="dashboard.js"></script>
   <script src="script.js"></script>

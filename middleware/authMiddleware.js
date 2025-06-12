@@ -1,10 +1,13 @@
 const jwt = require("jsonwebtoken");
 
-function authMiddleware(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "No token" });
-
+module.exports = (req, res, next) => {
   try {
+    const token = req.headers.authorization?.split(" ")[1];
+    
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('Decoded token:', decoded);
     req.user = decoded;
@@ -12,8 +15,6 @@ function authMiddleware(req, res, next) {
     next();
   } catch (error) {
     console.error('Token verification error:', error);
-    res.status(403).json({ message: "Invalid token" });
+    res.status(401).json({ message: error.message || "Invalid token" });
   }
-}
-
-module.exports = authMiddleware;
+};

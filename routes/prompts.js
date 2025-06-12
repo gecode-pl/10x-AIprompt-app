@@ -2,6 +2,7 @@ const express = require("express");
 const Prompt = require("../models/Prompt");
 const auth = require("../middleware/authMiddleware");
 const router = express.Router();
+const { reorderPrompts, formatPromptsForApi } = require('../utils/promptUtils');
 
 // CREATE
 router.post("/", auth, async (req, res) => {
@@ -103,6 +104,19 @@ router.get("/json", async (req, res) => {
   } catch (error) {
     console.error('Error getting prompts in JSON format:', error);
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Publiczny endpoint do pobierania promptów w formacie JSON
+router.get('/json/:userId', async (req, res) => {
+  try {
+    const prompts = await Prompt.find({ userId: req.params.userId })
+      .sort({ position: 1 });
+    
+    res.json(formatPromptsForApi(prompts));
+  } catch (error) {
+    console.error('Error fetching prompts:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
