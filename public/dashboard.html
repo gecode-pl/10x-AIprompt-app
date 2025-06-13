@@ -70,13 +70,14 @@
       <table class="table table-bordered table-striped align-middle">
         <thead class="table-dark">
           <tr>
+            <th style="width: 50px">#</th>
             <th>Kategoria</th>
             <th>Nazwa</th>
             <th>Treść</th>
             <th>Akcje</th>
           </tr>
         </thead>
-        <tbody id="promptTableBody">
+        <tbody id="promptTableBody" class="sortable">
           <!-- Wiersze będą generowane dynamicznie -->
         </tbody>
       </table>
@@ -147,5 +148,8 @@
   <!-- Twój kod -->
   <script src="dashboard.js"></script>
   <script src="script.js"></script>
+
+  <!-- Dodaj Sortable.js -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </body>
 </html>

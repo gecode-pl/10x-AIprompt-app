@@ -10,13 +10,15 @@ async function loadPrompts() {
     tbody.innerHTML = "";
 
     if (!data.prompts || data.prompts.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4">Brak promptów</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">Brak promptów</td></tr>`;
       return;
     }
 
-    data.prompts.forEach((prompt) => {
+    data.prompts.forEach((prompt, index) => {
       const row = document.createElement("tr");
+      row.setAttribute('data-id', prompt._id);
       row.innerHTML = `
+        <td class="handle" style="cursor: move">⋮⋮</td>
         <td>${prompt.category}</td>
         <td>${prompt.name}</td>
         <td>${prompt.content}</td>
@@ -26,6 +28,37 @@ async function loadPrompts() {
         </td>
       `;
       tbody.appendChild(row);
+    });
+
+    // Inicjalizacja Sortable.js
+    new Sortable(tbody, {
+      handle: '.handle',
+      animation: 150,
+      onEnd: async function(evt) {
+        const rows = tbody.getElementsByTagName('tr');
+        const reorderedIds = Array.from(rows).map(row => row.getAttribute('data-id'));
+        
+        try {
+          const res = await fetch(`${promptApi}/reorder`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ reorderedIds })
+          });
+
+          if (!res.ok) {
+            throw new Error('Błąd podczas zapisywania kolejności');
+          }
+
+          // Odśwież listę promptów
+          await loadPrompts();
+        } catch (error) {
+          console.error('Błąd zapisywania kolejności:', error);
+          alert('Nie udało się zapisać nowej kolejności');
+        }
+      }
     });
   } catch (error) {
     console.error("Błąd ładowania:", error);

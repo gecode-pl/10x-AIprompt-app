@@ -1,6 +1,6 @@
 # Dokumentacja testów
 
-## Testy jednostkowe
+## Testy
 
 ### 1. Test API Promptów (`tests/prompts.test.js`)
 - **should return 401 for unauthorized GET**
@@ -8,9 +8,7 @@
   - Weryfikuje czy zwracany jest odpowiedni kod błędu (401)
   - Sprawdza czy odpowiedź zawiera komunikat o błędzie
 
-## Testy E2E
-
-### 1. Test API (`tests/e2e/api.test.js`)
+### 2. Test API (`tests/e2e/api.test.js`)
 
 #### Health Check
 - **should return 200 OK for health check endpoint**
@@ -39,6 +37,24 @@ Aktualne pokrycie kodu testami:
 npm run test:all
 ```
 
+### Testy jednostkowe
+```bash
+npm run test
+```
+Uruchamia testy z katalogu `tests/unit/` (obecnie brak testów jednostkowych)
+
+### Testy E2E
+```bash
+npm run test:e2e
+```
+Uruchamia testy z katalogu `tests/e2e/`
+
+### Testy z pokryciem
+```bash
+npm run test:coverage
+```
+Generuje raport pokrycia kodu testami
+
 ## Wymagania do uruchomienia testów
 
 1. MongoDB musi być uruchomiony lokalnie lub dostępny przez zmienną środowiskową `MONGODB_URI`
@@ -55,12 +71,27 @@ Aplikacja wykorzystuje GitHub Actions do automatycznego uruchamiania testów. Pi
 
 2. Wykonuje następujące kroki:
    - Uruchamia kontener MongoDB
-   - Konfiguruje Node.js v18
-   - Instaluje zależności
+   - Konfiguruje Node.js v18.20.8
+   - Instaluje wymagane zależności systemowe (libssl1.1)
+   - Instaluje zależności npm
    - Uruchamia wszystkie testy
 
 3. Wymagane zmienne środowiskowe:
    - `MONGODB_URI`: mongodb://localhost:27017/test-db
    - `JWT_SECRET`: test-secret
 
-Pipeline można monitorować w zakładce "Actions" na GitHubie. 
+Pipeline można monitorować w zakładce "Actions" na GitHubie.
+
+## Plan rozwoju testów
+
+W przyszłości planowane jest dodanie następujących testów:
+
+1. Testy jednostkowe:
+   - Test Middleware (authMiddleware.test.js)
+   - Test Modeli (Prompt.test.js)
+   - Test Obsługi Błędów (errorHandling.test.js)
+
+2. Testy E2E:
+   - Test tworzenia nowego promptu
+   - Test pobierania listy promptów
+   - Test aktualizacji i usuwania promptów 
